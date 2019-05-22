@@ -4,9 +4,45 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>vue-slot</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   </head>
   <body>
-    <div id="app"> Hello World </div>
+    <div id="app">
+      <!-- <input type="text" id="mySecondyTxt" /> -->
+    </div>
       
   </body>
+  <script>
+  
+  setInterval(function () {
+    sendRequest();
+  }
+  , 60000)
+  function sendRequest(){
+    var tags = '{"Tags":{[{ "Name":"E0705A2U319:Lock"},{ "Name":"E0705A2U320:Lock"},{ "Name":"E0705A2U323:Lock"},{ "Name":"E0705A2U325:Lock"},{ "Name":"E0705A2U327:Lock"}]}}';
+      $.ajax({
+        type: "POST",
+        async: true,   
+        dataType: "json",
+        headers: {
+           "Accept":"pplication/json",
+           "Authorization": "Basic " + btoa("admin:2582")
+        },
+        contentType: 'application/json; charset=UTF-8',
+        url: "http://140.128.47.25/ClccWebService/Json/GetTagValue/PU",
+        data: tags,
+        success: 
+          function(data){
+            console.log(data);
+            $("#app").append(JSON.stringify(data));
+           //$('#app').html(data); //insert text of test.php into your div
+           
+        },
+        complete: function() {
+       // Schedule the next request when the current one's complete
+       //setInterval(sendRequest, 15000); // The interval set to 5 seconds
+     }
+    });
+  };
+  </script>
 </html>
